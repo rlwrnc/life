@@ -34,13 +34,10 @@ int main(int argc, char **argv)
     while (game.state != QUIT) {
         while (SDL_PollEvent(&e) != 0)
             handleInput(&game, &e);
-
         
         SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
         SDL_RenderClear(renderer);
         renderGame(renderer, &game);
-        SDL_Rect rect = { .x = 202, .y = 202, .w = 17, .h = 17 };
-        SDL_RenderFillRect(renderer, &rect);
         SDL_RenderPresent(renderer);
     }
 
