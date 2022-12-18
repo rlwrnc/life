@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "game.h"
 #include "render.h"
+#include "logic.h"
 
 int main(int argc, char **argv)
 {
@@ -31,9 +32,9 @@ int main(int argc, char **argv)
 
     SDL_Event e;
     while (game.state != QUIT) {
-        while (SDL_PollEvent(&e) != 0) 
-            if (e.type == SDL_QUIT)
-                game.state = QUIT;
+        while (SDL_PollEvent(&e) != 0)
+            handleInput(&game, &e);
+
         
         SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
         SDL_RenderClear(renderer);
