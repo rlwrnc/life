@@ -1,9 +1,8 @@
 #include <SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
+#include "game.h"
+#include "render.h"
 
 int main(int argc, char **argv)
 {
@@ -25,15 +24,22 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
+    Game game;
+    for (int i = 0; i < BOARD_SIZE; i++)
+        game.board[i] = 0;
+    game.state = PLACE;
+
     SDL_Event e;
-    int quit = 0;
-    while (!quit) {
+    while (game.state != QUIT) {
         while (SDL_PollEvent(&e) != 0) 
             if (e.type == SDL_QUIT)
-                quit = 1;
+                game.state = QUIT;
         
         SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
         SDL_RenderClear(renderer);
+        renderGame(renderer, &game);
+        SDL_Rect rect = { .x = 202, .y = 202, .w = 17, .h = 17 };
+        SDL_RenderFillRect(renderer, &rect);
         SDL_RenderPresent(renderer);
     }
 
