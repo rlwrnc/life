@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 
     Game game;
     for (int i = 0; i < BOARD_SIZE; i++)
-        game.board[i] = 0;
+        game.board[i] = DEAD;
     game.state = PLACE;
 
     SDL_Event e;
@@ -37,6 +37,8 @@ int main(int argc, char **argv)
         
         SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
         SDL_RenderClear(renderer);
+        if (game.state == PLAY)
+            tick(&game);
         renderGame(renderer, &game);
         SDL_RenderPresent(renderer);
     }
